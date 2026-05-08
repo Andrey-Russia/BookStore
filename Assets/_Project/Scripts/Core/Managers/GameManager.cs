@@ -4,7 +4,9 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    public int Money = 0;
+    [SerializeField] private int money;
+
+    public int Money => money;
 
     private void Awake()
     {
@@ -13,7 +15,13 @@ public class GameManager : MonoBehaviour
 
     public void AddMoney(int amount)
     {
-        Money += amount;
-        UIManager.Instance.UpdateMoney(Money);
+        money += amount;
+        UIManager.Instance.UpdateMoney(money);
+    }
+
+    public void RemoveMoney(int amount)
+    {
+        money -= amount;
+        UIManager.Instance.UpdateMoney(money);
     }
 }

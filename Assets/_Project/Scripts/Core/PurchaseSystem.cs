@@ -4,22 +4,33 @@ public class PurchaseSystem : MonoBehaviour
 {
     public static PurchaseSystem Instance;
 
-    public int bookPrice = 5;
+    [SerializeField] private int regularBookPrice = 5;
+    [SerializeField] private int hikikomoriBookPrice = 10;
 
     private void Awake()
     {
         Instance = this;
     }
 
-    public void TryBuy(NpcController npc)
+    public void TryBuy(NPCController npc)
     {
-        if (npc.isBeggar)
+        if (npc.Type == NPCType.Beggar)
             return;
 
-        if (InventorySystem.Instance.HasBooks())
+        int price = GetBookPrice(npc.Type);
+
+        GameManager.Instance.AddMoney(price);
+    }
+
+    private int GetBookPrice(NPCType type)
+    {
+        switch (type)
         {
-            InventorySystem.Instance.RemoveBook();
-            GameManager.Instance.AddMoney(bookPrice);
+            case NPCType.Hikikomori:
+                return hikikomoriBookPrice;
+
+            default:
+                return regularBookPrice;
         }
     }
 }

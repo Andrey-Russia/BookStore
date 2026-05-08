@@ -4,20 +4,40 @@ public class InventorySystem : MonoBehaviour
 {
     public static InventorySystem Instance;
 
-    public int books = 50;
+    [SerializeField] private int mangaCount = 20;
+    [SerializeField] private int newspaperCount = 50;
 
     private void Awake()
     {
         Instance = this;
     }
 
-    public bool HasBooks()
+    public bool HasBook(BookType type)
     {
-        return books > 0;
+        switch (type)
+        {
+            case BookType.Manga:
+                return mangaCount > 0;
+
+            case BookType.Newspaper:
+                return newspaperCount > 0;
+
+            default:
+                return false;
+        }
     }
 
-    public void RemoveBook()
+    public void RemoveBook(BookType type)
     {
-        books--;
+        switch (type)
+        {
+            case BookType.Manga:
+                mangaCount--;
+                break;
+
+            case BookType.Newspaper:
+                newspaperCount--;
+                break;
+        }
     }
 }

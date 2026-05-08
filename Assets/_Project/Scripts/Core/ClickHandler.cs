@@ -2,16 +2,26 @@ using UnityEngine;
 
 public class ClickHandler : MonoBehaviour
 {
-    public int reward = 10;
+    [Header("Beggar Reward")]
+    [SerializeField] private int reward = 10;
+
+    private NPCController npcController;
+
+    private void Awake()
+    {
+        npcController = GetComponent<NPCController>();
+    }
 
     private void OnMouseDown()
     {
-        NpcController npc = GetComponent<NpcController>();
+        if (npcController == null)
+            return;
 
-        if (npc != null && npc.isBeggar)
-        {
-            GameManager.Instance.AddMoney(reward);
-            Destroy(gameObject);
-        }
+        if (npcController.Type != NPCType.Beggar)
+            return;
+
+        GameManager.Instance.AddMoney(reward);
+
+        Destroy(gameObject);
     }
 }
